@@ -1,0 +1,25 @@
+<div class="container">
+    <h2>Signatories</h2>
+    <br>
+    <div cdkDropListGroup>
+        <div class="search-container">
+            <input type="text" #search_bar id="search_bar" placeholder="Search...">
+            <img class="search-icon" src="../../../assets/img/search-icon.png">
+        </div>
+
+        <div class="signatories-class">
+            <div cdkDropList #signatoriesList="cdkDropList" [cdkDropListData]="signatories" [cdkDropListConnectedTo]="[selectedList]" class="signer-list" (cdkDropListDropped)="drop($event)" id="all-signers">
+                <div class="signer-block" *ngFor="let signer of signatories" cdkDrag>{{signer.name}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <h2>Selected</h2>
+    <br>
+    <div cdkDropList #selectedList="cdkDropList" [cdkDropListData]="selected" [cdkDropListConnectedTo]="[signatoriesList]" class="signer-list selected-signers" (cdkDropListDropped)="drop($event)" id="selected-signers">
+        <div class="signer-block" *ngFor="let signer of selected" cdkDrag>{{signer.name}}</div>
+    </div>
+</div>
