@@ -131,7 +131,7 @@ export class FormComponent implements OnInit, OnChanges {
         return;
       } else {
         const progressInterval = setInterval(() => {
-          if (this.files[index].progress === 100) {
+          if (this.files[index]?.progress === 100) {
             clearInterval(progressInterval);
             this.uploadFilesSimulator(index + 1);
           } else {

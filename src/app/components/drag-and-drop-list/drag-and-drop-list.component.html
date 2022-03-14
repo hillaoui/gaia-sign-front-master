@@ -1,25 +1,51 @@
-<div class="container">
-    <h2>Signatories</h2>
-    <br>
-    <div cdkDropListGroup>
-        <div class="search-container">
-            <input type="text" #search_bar id="search_bar" placeholder="Search...">
-            <img class="search-icon" src="../../../assets/img/search-icon.png">
-        </div>
+<div class="all-container">
 
+    <div cdkDropListGroup class="container border-drag">
+        <h2>Signatories</h2>
+        <br>
         <div class="signatories-class">
+            <div class="search-container">
+                <input type="text" #search_bar id="search_bar" placeholder="Search..." [(ngModel)]="filterTerm" />
+            </div>
             <div cdkDropList #signatoriesList="cdkDropList" [cdkDropListData]="signatories" [cdkDropListConnectedTo]="[selectedList]" class="signer-list" (cdkDropListDropped)="drop($event)" id="all-signers">
-                <div class="signer-block" *ngFor="let signer of signatories" cdkDrag>{{signer.name}}</div>
+                <ul class="signer-block" *ngFor="let signer of signatories | filter: filterTerm" cdkDrag>
+                    <div class="signator-avatar">
+                        <span>{{ signer.name[0]+signer.name[1] }}</span>
+                    </div>
+                    <div class="signator-details">
+                        <li>Name: {{signer.name}}</li>
+                        <li>Username: {{signer.username}}</li>
+                        <li>Email: {{signer.email}}</li>
+                    </div>
+                </ul>
             </div>
         </div>
     </div>
-</div>
 
-
-<div class="container">
-    <h2>Selected</h2>
-    <br>
-    <div cdkDropList #selectedList="cdkDropList" [cdkDropListData]="selected" [cdkDropListConnectedTo]="[signatoriesList]" class="signer-list selected-signers" (cdkDropListDropped)="drop($event)" id="selected-signers">
-        <div class="signer-block" *ngFor="let signer of selected" cdkDrag>{{signer.name}}</div>
+    <div cdkDropListGroup class="container border-drag">
+        <h2>Selected</h2>
+        <br>
+        <div class="ordonner-signers">
+            <label for="example-text-input">Ordonner les signataires:</label>
+            <div class="radio-group">
+                <input type="radio" id="option-true" name="optradio" ng-checked="is_sorted == true" ng-model="is_sorted" ng-value="true" class="ng-pristine ng-untouched ng-valid ng-not-empty" value="true" checked="checked">
+                <label for="option-true" class="ng-binding">Oui</label>
+                <input type="radio" id="option-false" name="optradio" ng-checked="is_sorted == false" ng-model="is_sorted" ng-value="false" class="ng-pristine ng-untouched ng-valid ng-not-empty" value="false">
+                <label for="option-false" class="ng-binding">Non</label>
+            </div>
+        </div>
+        <div cdkDropList #selectedList="cdkDropList" [cdkDropListData]="selected" [cdkDropListConnectedTo]="[signatoriesList]" class="signer-list" (cdkDropListDropped)="drop($event)" id="selected-signers">
+            <ul class="signer-block" *ngFor="let signer of selected" cdkDrag>
+                <div class="signator-avatar">
+                    <span>{{ signer.name[0]+signer.name[1] }}</span>
+                </div>
+                <div class="signator-details">
+                    <li>Name: {{signer.name}}</li>
+                    <li>Username: {{signer.username}}</li>
+                    <li>Email: {{signer.email}}</li>
+                </div>
+            </ul>
+        </div>
     </div>
+
 </div>

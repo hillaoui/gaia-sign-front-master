@@ -16,10 +16,7 @@ export class AppComponent implements OnInit {
           {
             'key': 'Document upload',
             'input': 'file',
-            'valids': [{
-              'valid': 'required',
-              'error': 'Document upload is required'
-            }]
+            'valids': []
           }
         ]
       },

@@ -12,7 +12,9 @@ import { DndDirective } from './shared/_directives/dnd.directive';
 import { ProgressComponent } from './components/progress/progress.component';
 import { DragAndDropListComponent } from './components/drag-and-drop-list/drag-and-drop-list.component';
 import { HeaderComponent } from './components/header/header.component';
-import { FilterPipe } from './shared/_pipes/filter.pipe';
+import { Ng2SearchPipeModule } from './shared/_pipes/filter.module';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +26,6 @@ import { FilterPipe } from './shared/_pipes/filter.pipe';
     ProgressComponent,
     DragAndDropListComponent,
     HeaderComponent,
-    FilterPipe
   ],
   providers: [],
   imports: [
@@ -32,7 +33,8 @@ import { FilterPipe } from './shared/_pipes/filter.pipe';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    DragDropModule
+    DragDropModule,
+    Ng2SearchPipeModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
