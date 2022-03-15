@@ -1,6 +1,7 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { debounceTime, fromEvent, map } from 'rxjs';
+import { DataService } from 'src/app/shared/_services/data.service';
 
 @Component({
   selector: 'app-drag-and-drop-list',
@@ -9,7 +10,7 @@ import { debounceTime, fromEvent, map } from 'rxjs';
 })
 export class DragAndDropListComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dataService: DataService) { }
 
   // Variables declaration
   filterTerm!: string;
@@ -96,6 +97,7 @@ export class DragAndDropListComponent implements OnInit {
                         event.previousIndex,
                         event.currentIndex);
     }
-    console.log(this.selected);
+    this.dataService.getSelectedSignatoriesData(this.selected);
+    console.log('selected signatories from service:', this.dataService.selected_signatories_details);
   }
 }

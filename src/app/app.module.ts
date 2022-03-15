@@ -13,6 +13,7 @@ import { ProgressComponent } from './components/progress/progress.component';
 import { DragAndDropListComponent } from './components/drag-and-drop-list/drag-and-drop-list.component';
 import { HeaderComponent } from './components/header/header.component';
 import { Ng2SearchPipeModule } from './shared/_pipes/filter.module';
+import { PdfViewerComponent } from './components/pdf-viewer/pdf-viewer.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { Ng2SearchPipeModule } from './shared/_pipes/filter.module';
     ProgressComponent,
     DragAndDropListComponent,
     HeaderComponent,
+    PdfViewerComponent,
   ],
   providers: [],
   imports: [

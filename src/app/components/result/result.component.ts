@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, Renderer2, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-result',
@@ -9,6 +9,8 @@ export class ResultComponent implements OnInit {
   @Input() allFormsData: any[];
   groupObjKeys = [];
   groupObjValues = [];
+  @Output() data = new EventEmitter<any>();
+
   constructor(private elementRef: ElementRef, private renderer: Renderer2) { }
 
   ngOnInit() {
@@ -24,11 +26,12 @@ export class ResultComponent implements OnInit {
       accumulator[key].push(currentValue);
       return accumulator;
     }, {});
-    console.log(groupArr);
-    this.createTable(groupArr);
+    this.data = groupArr;
+    console.log('this is data:', this.data);
   }
 
-  createTable(groupArr) {
+
+   /* createTable(groupArr) {
     const div = this.renderer.createElement('div');
     this.renderer.addClass(div, 'result');
     const table = this.renderer.createElement('table');
@@ -36,7 +39,7 @@ export class ResultComponent implements OnInit {
     this.renderer.addClass(table, 'table-bordered');
     let data = '';
     this.groupObjKeys = Object.keys(groupArr);
-    console.log(this.groupObjKeys);
+    console.log('this is groupObjKeys:', this.groupObjKeys);
         for (let i = 0; i < this.groupObjKeys.length; i++) {
           const objKeys = Object.keys(groupArr[this.groupObjKeys[i]][0]);
           console.log(objKeys);
@@ -57,6 +60,6 @@ export class ResultComponent implements OnInit {
         this.renderer.setProperty(table, 'innerHTML', data);
         this.renderer.appendChild(div, table);
         this.renderer.appendChild(this.elementRef.nativeElement, div);
-  }
+   } */
 
 }

@@ -10,6 +10,6 @@
     <div class="multistep-content">
         <app-form *ngIf="stepItems && startingIndex < countSteps" [countSteps]="countSteps" [stepNo]="startingIndex" [formFields]="data[startingIndex].formFields" [formValues]="formValues" [stepName]="data[startingIndex].stepname" (formData)="getFormData($event)"
             (newStep)="onnewStep($event)"></app-form>
-        <app-result *ngIf="stepItems && startingIndex === countSteps" [allFormsData]="allFormsData"></app-result>
+        <app-pdf-viewer *ngIf="stepItems && startingIndex === countSteps"></app-pdf-viewer>
     </div>
 </div>

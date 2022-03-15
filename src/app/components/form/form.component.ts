@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, ElementRef, Output, EventEmitter, OnChanges, Renderer2, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, ValidatorFn, NgForm } from '@angular/forms';
 import { Formtype } from '../../shared/enums/Formtype';
+import { DataService } from 'src/app/shared/_services/data.service';
+
 
 @Component({
   selector: 'app-form',
@@ -21,10 +23,10 @@ export class FormComponent implements OnInit, OnChanges {
   gender = '1';
   AllInformations: any[] = [];
   files: any[] = [];
+  public filecontent: string[] = [];
 
 
-
-  constructor(private el: ElementRef, private renderer: Renderer2) { }
+  constructor(private el: ElementRef, private renderer: Renderer2, private dataService: DataService) { }
 
   ngOnInit() {
   }
@@ -55,7 +57,7 @@ export class FormComponent implements OnInit, OnChanges {
       const validatorsArr: ValidatorFn[] = [];
       if (element.valids?.length > 0) {
 
-        element.valids.forEach(val => {
+        element.valids.forEach((val: { valid: string; validator: string | RegExp; length: number; }) => {
           if (val.valid === 'required' || val.valid === 'email') {
             validatorsArr.push(Validators[val.valid]);
           }
@@ -79,7 +81,8 @@ export class FormComponent implements OnInit, OnChanges {
   }
   submit(myForm: NgForm) {
     this.AllInformations.push(this.formName.value);
-    this.convertToBase64();
+    this.dataService.getFormData(this.AllInformations);
+    if (this.stepNo === 0) { this.convertToBase64(); }
     const obj = Object.assign(this.formName.value, { 'formName': this.stepName });
     this.formData.emit(obj);
     this.newStep.emit(this.stepNo + 1);
@@ -87,7 +90,7 @@ export class FormComponent implements OnInit, OnChanges {
   }
 
 
-  gotoStep(stepNo: any) {
+  gotoStep(stepNo: number) {
     this.newStep.emit(stepNo);
   }
 
@@ -173,7 +176,6 @@ export class FormComponent implements OnInit, OnChanges {
 
 
   convertToBase64() {
-
     // Check File is not Empty
     if (this.files?.length > 0) {
       // tslint:disable-next-line: prefer-const
@@ -182,15 +184,17 @@ export class FormComponent implements OnInit, OnChanges {
         const fileToLoad = item;
         // FileReader funthis.filesction for read the file.
         const fileReader = new FileReader();
-        let base64: any;
         // tslint:disable-next-line: prefer-const
+        let base64;
 
         // Onload of file read the file content
-        fileReader.onload = function (fileLoadedEvent) {
+        fileReader.onload = (fileLoadedEvent) => {
           base64 = fileLoadedEvent.target.result;
+          this.filecontent.push(base64);
           // Print data in console
-          console.log(item.name + ': ' + base64);
+          console.log(this.filecontent);
         };
+        this.dataService.getPdfBase64Data(this.filecontent);
         // Convert data to base64
         fileReader.readAsDataURL(fileToLoad);
         // tslint:disable-next-line: prefer-const
