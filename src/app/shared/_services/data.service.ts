@@ -1,13 +1,11 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class DataService {
-
-
-  constructor() { }
+  constructor() {}
 
   // tslint:disable-next-line: member-ordering
   private form_details = new BehaviorSubject([]);
@@ -22,6 +20,13 @@ export class DataService {
   private pdf_base64_data = new BehaviorSubject([]);
   shared_pdf_base64_details = this.pdf_base64_data.asObservable();
 
+  // tslint:disable-next-line: member-ordering
+  private form_pdf_data = new BehaviorSubject([]);
+  shared_form_pdf_details = this.form_pdf_data.asObservable();
+
+  // tslint:disable-next-line: member-ordering
+  private blob_pdf_data = new BehaviorSubject([]);
+  shared_blob_pdf_details = this.blob_pdf_data.asObservable();
 
   getFormData(data: any) {
     this.form_details.next(data);
@@ -33,5 +38,13 @@ export class DataService {
 
   getPdfBase64Data(data: any) {
     this.pdf_base64_data.next(data);
+  }
+
+  getFormPdfData(data: any) {
+    this.form_pdf_data.next(data);
+  }
+
+  getBlobPdfData(data: any) {
+    this.blob_pdf_data.next(data);
   }
 }

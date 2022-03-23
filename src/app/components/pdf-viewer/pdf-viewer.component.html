@@ -1,1 +1,14 @@
-<h1>Hellooo</h1>
+<div class="content-wrapper">
+    <ejs-pdfviewer id="pdfViewer" [serviceUrl]='service' [documentPath]='pdf_base64_data[0]' [toolbarSettings]="toolbarSettings" enableDownload='true' [enableFormDesignerToolbar]='true' [enableFormFields]="true" style="height:640px;display:block"></ejs-pdfviewer>
+    <div class="fields-class">
+        <button class="example-box" *ngFor="let signer of selected_signatories">{{ signer.name }}</button>
+    </div>
+    <div class="button-div">
+        <button class="btn btn-success" (click)="loadBase64string()">
+        <i class="fa font-weight-bold" aria-hidden="true">Comfirm document preparation</i>
+    </button>
+        <button class="btn btn-success" (click)="signDocument()">
+        <i class="fa font-weight-bold" aria-hidden="true">Sign The Documents</i>
+    </button>
+    </div>
+</div>

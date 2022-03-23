@@ -64,3 +64,22 @@
 .form-heading li.completed::after {
     background: #B8AEB4;
 }
+
+
+/* multistep container */
+
+.multistepbox {
+    position: relative;
+    display: inline-block;
+}
+
+.multistepbox span {
+    margin-right: 5px;
+}
+
+.multistepbox button {
+    padding: 0;
+    background-color: transparent;
+    box-shadow: none;
+    border: 0;
+}

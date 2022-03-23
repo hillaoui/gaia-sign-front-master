@@ -1,16 +1,31 @@
-import { Component, OnInit, Input, ElementRef, Output, EventEmitter, OnChanges, Renderer2, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators, ValidatorFn, NgForm } from '@angular/forms';
-import { Formtype } from '../../shared/enums/Formtype';
-import { DataService } from 'src/app/shared/_services/data.service';
-
+import {
+  Component,
+  OnInit,
+  Input,
+  ElementRef,
+  Output,
+  EventEmitter,
+  OnChanges,
+  Renderer2,
+  ViewChild,
+} from "@angular/core";
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  ValidatorFn,
+  NgForm,
+} from "@angular/forms";
+import { Formtype } from "../../shared/enums/Formtype";
+import { DataService } from "src/app/shared/_services/data.service";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-form',
-  templateUrl: './form.component.html',
-  styleUrls: ['./form.component.scss']
+  selector: "app-form",
+  templateUrl: "./form.component.html",
+  styleUrls: ["./form.component.scss"],
 })
 export class FormComponent implements OnInit, OnChanges {
-
   // Declaring variables
   @Input() countSteps: any;
   @Input() stepNo!: number;
@@ -20,23 +35,28 @@ export class FormComponent implements OnInit, OnChanges {
   @Output() formData = new EventEmitter<any>();
   formName: any;
   @Output() newStep = new EventEmitter<any>();
-  gender = '1';
+  gender = "1";
   AllInformations: any[] = [];
   files: any[] = [];
   public filecontent: string[] = [];
 
+  constructor(
+    private el: ElementRef,
+    private renderer: Renderer2,
+    private dataService: DataService,
+    private router: Router
+  ) {}
 
-  constructor(private el: ElementRef, private renderer: Renderer2, private dataService: DataService) { }
-
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ngOnChanges() {
     this.getFormName();
   }
 
   getFormName() {
-    this.formName = Object.keys(Formtype).find(key => Formtype[key] === this.stepName);
+    this.formName = Object.keys(Formtype).find(
+      (key) => Formtype[key] === this.stepName
+    );
     if (this.formName) {
       this.createForm();
     }
@@ -53,55 +73,60 @@ export class FormComponent implements OnInit, OnChanges {
   }
 
   validateForm() {
-    this.formFields.forEach(element => {
+    this.formFields.forEach((element) => {
       const validatorsArr: ValidatorFn[] = [];
       if (element.valids?.length > 0) {
+        element.valids.forEach(
+          (val: {
+            valid: string;
+            validator: string | RegExp;
+            length: number;
+          }) => {
+            if (val.valid === "required" || val.valid === "email") {
+              validatorsArr.push(Validators[val.valid]);
+            }
+            if (val.valid === "pattern") {
+              validatorsArr.push(Validators.pattern(val.validator));
+            }
+            if (val.valid === "minlength") {
+              validatorsArr.push(Validators.minLength(val?.length));
+            }
+          }
+        );
 
-        element.valids.forEach((val: { valid: string; validator: string | RegExp; length: number; }) => {
-          if (val.valid === 'required' || val.valid === 'email') {
-            validatorsArr.push(Validators[val.valid]);
-          }
-          if (val.valid === 'pattern') {
-            validatorsArr.push(
-              Validators.pattern(val.validator)
-            );
-          }
-          if (val.valid === 'minlength') {
-            validatorsArr.push(
-              Validators.minLength(val?.length)
-            );
-          }
-        });
-
-        this.formName.addControl(element.key, new FormControl('', validatorsArr));
+        this.formName.addControl(
+          element.key,
+          new FormControl("", validatorsArr)
+        );
       } else {
-        this.formName.addControl(element.key, new FormControl(''));
+        this.formName.addControl(element.key, new FormControl(""));
       }
     });
   }
   submit(myForm: NgForm) {
     this.AllInformations.push(this.formName.value);
     this.dataService.getFormData(this.AllInformations);
-    if (this.stepNo === 0) { this.convertToBase64(); }
-    const obj = Object.assign(this.formName.value, { 'formName': this.stepName });
+    if (this.stepNo === 2) {
+      this.convertToBase64();
+    }
+    const obj = Object.assign(this.formName.value, { formName: this.stepName });
     this.formData.emit(obj);
     this.newStep.emit(this.stepNo + 1);
     myForm.resetForm();
+    if (this.stepNo === 2) {
+      this.router.navigate(["/preparedoc"]);
+    }
   }
-
 
   gotoStep(stepNo: number) {
     this.newStep.emit(stepNo);
   }
 
-
-
   // file upload dnd
 
   // tslint:disable-next-line: member-ordering
-  @ViewChild('fileDropRef', { static: false }) fileDropEl!: ElementRef;
+  @ViewChild("fileDropRef", { static: false }) fileDropEl!: ElementRef;
   // tslint:disable-next-line: member-ordering
-
 
   /**
    * on file drop handler
@@ -123,26 +148,9 @@ export class FormComponent implements OnInit, OnChanges {
    */
   deleteFile(index: number) {
     this.files.splice(index, 1);
-  }
-
-  /**
-   * Simulate the upload process
-   */
-  uploadFilesSimulator(index: number) {
-    setTimeout(() => {
-      if (index === this.files?.length) {
-        return;
-      } else {
-        const progressInterval = setInterval(() => {
-          if (this.files[index]?.progress === 100) {
-            clearInterval(progressInterval);
-            this.uploadFilesSimulator(index + 1);
-          } else {
-            this.files[index].progress += 5;
-          }
-        }, 200);
-      }
-    }, 1000);
+    if (this.files.length === 1) {
+      this.files.length = 0;
+    }
   }
 
   /**
@@ -154,8 +162,7 @@ export class FormComponent implements OnInit, OnChanges {
       item.progress = 0;
       this.files.push(item);
     }
-    this.fileDropEl.nativeElement.value = '';
-    this.uploadFilesSimulator(0);
+    this.fileDropEl.nativeElement.value = "";
   }
 
   /**
@@ -165,21 +172,23 @@ export class FormComponent implements OnInit, OnChanges {
    */
   formatBytes(bytes: number, decimals = 2) {
     if (bytes === 0) {
-      return '0 Bytes';
+      return "0 Bytes";
     }
     const k = 1024;
     const dm = decimals <= 0 ? 0 : decimals;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
   }
-
 
   convertToBase64() {
     // Check File is not Empty
     if (this.files?.length > 0) {
+      let filtered_files = this.files.filter(function (elem, index, self) {
+        return index === self.indexOf(elem);
+      });
       // tslint:disable-next-line: prefer-const
-      for (let item of this.files) {
+      for (let item of filtered_files) {
         // Select the file at index from list
         const fileToLoad = item;
         // FileReader funthis.filesction for read the file.
@@ -192,7 +201,7 @@ export class FormComponent implements OnInit, OnChanges {
           base64 = fileLoadedEvent.target.result;
           this.filecontent.push(base64);
           // Print data in console
-          console.log(this.filecontent);
+          console.log("filecontent", this.filecontent);
         };
         this.dataService.getPdfBase64Data(this.filecontent);
         // Convert data to base64
