@@ -19,4 +19,9 @@ export class SignataireComponent implements OnInit {
     });
     console.log("edited_pdf_base64_data", this.edited_pdf_base64_data);
   }
+
+  public download_pdf() {
+    let viewer = (<any>document.getElementById("pdfViewer")).ej2_instances[0];
+    viewer.download();
+  }
 }
