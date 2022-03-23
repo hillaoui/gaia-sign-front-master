@@ -113,9 +113,6 @@ export class FormComponent implements OnInit, OnChanges {
     this.formData.emit(obj);
     this.newStep.emit(this.stepNo + 1);
     myForm.resetForm();
-    if (this.stepNo === 2) {
-      this.router.navigate(["/preparedoc"]);
-    }
   }
 
   gotoStep(stepNo: number) {

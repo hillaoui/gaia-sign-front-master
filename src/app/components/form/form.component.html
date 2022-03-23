@@ -24,7 +24,7 @@
                     *ngIf="formName.get(form.key).hasError('required')"></span>
             </label>
             <div class="dropzone" appDnd (fileDropped)="onFileDropped($event)">
-                <input [type]="form.input" [formControlName]="form.key" #fileDropRef id="fileDropRef" accept=".pdf" class="form-control upload-input" [ngClass]="{'is-invalid' : formName.get(form.key).errors &&
+                <input [type]="form.input" #fileDropRef id="fileDropRef" accept=".pdf" class="form-control upload-input" [ngClass]="{'is-invalid' : formName.get(form.key).errors &&
                 formDir.submitted }" (change)="fileBrowseHandler($event.target.files)" multiple>
                 <img src="../../../assets/img/ic-upload-file.svg" alt="" id="upload-img">
                 <h3>Drag and drop file here <br>or</h3>
