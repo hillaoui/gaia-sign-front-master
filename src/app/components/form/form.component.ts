@@ -106,7 +106,7 @@ export class FormComponent implements OnInit, OnChanges {
   submit(myForm: NgForm) {
     this.AllInformations.push(this.formName.value);
     this.dataService.getFormData(this.AllInformations);
-    if (this.stepNo === 2) {
+    if (this.stepNo === 1) {
       this.convertToBase64();
     }
     const obj = Object.assign(this.formName.value, { formName: this.stepName });

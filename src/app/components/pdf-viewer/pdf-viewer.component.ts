@@ -8,27 +8,34 @@ import { Router } from "@angular/router";
   styleUrls: ["./pdf-viewer.component.scss"],
 })
 export class PdfViewerComponent implements OnInit {
-  public service = "http://localhost:4628/api/pdfviewer";
 
   pdf_base64_data: any;
   selected_signatories: any;
   edited_pdf_blob = [];
+  public imgSign = '';
+  public isCropImage = false;
+  images = [
+    '../assets/images/Document1/Document-1.jpg',
+    '../assets/images/Document1/Document-2.jpg',
+    '../assets/images/Document1/Document-3.jpg',
+    '../assets/images/Document1/Document-4.jpg',
+    '../assets/images/Document1/Document-5.jpg',
+    '../assets/images/Document1/Document-6.jpg',
+  ];
 
-  public toolbarSettings = {
-    showTooltip: true,
-    toolbarItems: [
-      "DownloadOption",
-      "PageNavigationTool",
-      "MagnificationTool",
-      "PanTool",
-      "SelectionTool",
-      "SearchOption",
-      "DownloadOption",
-      "UndoRedoTool",
-      "FormDesignerEditTool",
-      "CommentTool",
-    ],
+  edge = {
+    top: true,
+    bottom: true,
+    left: true,
+    right: true
   };
+  movingOffset = { x: 0, y: 0 };
+  endOffset = { x: 0, y: 0 };
+
+  fields = [{
+    id: 1,
+    name: 'signatureField',
+  }];
 
   constructor(private dataService: DataService, private router: Router) {}
 
@@ -43,20 +50,7 @@ export class PdfViewerComponent implements OnInit {
     console.log("lets see", this.selected_signatories);
   }
 
-  signDocument() {
-    this.dataService.getBlobPdfData(this.edited_pdf_blob);
-    this.router.navigate(["signdoc"]);
-  }
 
-  exportForm(): any {
-    let viewer = (<any>document.getElementById("pdfViewer")).ej2_instances[0];
-    let formField = viewer.retrieveFormFields();
-    this.dataService.getFormPdfData(formField);
-    console.log(
-      "Pdf Form data from service:",
-      this.dataService.shared_form_pdf_details
-    );
-  }
 
   loadBase64string() {
     let viewer = (<any>document.getElementById("pdfViewer")).ej2_instances[0];
@@ -76,5 +70,37 @@ export class PdfViewerComponent implements OnInit {
       reader.readAsDataURL(data);
     });
     this.edited_pdf_blob = edited_pdf_blob;
+  }
+
+  checkEdge(event: any) {
+    this.edge = event;
+    console.log('edge:', event);
+  }
+  onStart(event: any) {
+    console.log('started output:', event);
+  }
+
+  onStop(event: any) {
+    console.log('stopped output:', event);
+  }
+
+  onMoving(event: any) {
+    this.movingOffset.x = event.x;
+    this.movingOffset.y = event.y;
+    console.log('x= ' + event.x);
+    console.log('y= ' + event.y);
+  }
+
+  onMoveEnd(event: any) {
+    this.endOffset.x = event.x;
+    this.endOffset.y = event.y;
+  }
+
+  showPage(index: number) {
+    let images_collection = (<any>document.getElementsByClassName("pdf-image-container"));
+    images_collection[index].scrollIntoView({
+      behavior: "auto",
+      block: "start",
+      inline: "nearest"});
   }
 }

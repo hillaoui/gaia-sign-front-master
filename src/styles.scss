@@ -1,15 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import '../node_modules/@syncfusion/ej2-base/styles/material.css';
-@import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';
-@import '../node_modules/@syncfusion/ej2-dropdowns/styles/material.css';
-@import '../node_modules/@syncfusion/ej2-inputs/styles/material.css';
-@import '../node_modules/@syncfusion/ej2-navigations/styles/material.css';
-@import '../node_modules/@syncfusion/ej2-popups/styles/material.css';
-@import '../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css';
-@import '../node_modules/@syncfusion/ej2-pdfviewer/styles/material.css';
-@import '../node_modules/@syncfusion/ej2-notifications/styles/material.css';
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~bootstrap/scss/bootstrap";
+
+
+/* You can add global styles to this file, and also import other style files */
+
+:root {
+    --white-color: #fff;
+    --light-bg: #F2EDF0;
+    --light-color: #f5f4f4;
+    --light-highlight-color: #F0E1EA;
+    --dark-color: #9D2267;
+    --black-color: #1E0513;
+    --body-text-color: #463840;
+    --secondary-color: #ED4D5B;
+    --secondary-light-color: #FF9DA6;
+    --caption-color: #BAA1B0;
+    --attribute-container-color: #F2EDF0;
+    --input-container: #E8DFE4;
+    --main-secondary-gradient-color: linear-gradient(270deg, #9D2267 0%, #ED4D5B 100%);
+    --vert-grad-color: linear-gradient(360deg, #ED4D5B 0%, #9D2267 100%);
+    --nav-bg-color: #FAF5F6;
+    --header-menu-bg-color: #463840;
+    --btn-color: #463840;
+    --btn-light-color: #634455;
+    --header-menu-text-color: #f5f4f4;
+    --red-color: red;
+    --green-color: #1DC59C;
+    --gray-color: #999999;
+    --blue-color: #1B5F9F;
+    --pink-color: rgb(244, 127, 190);
+    --warning-color: rgb(244, 127, 190);
+    --h1-color: #1B5F9F;
+    --h2-color: #1B5F9F;
+    --h3-color: #1B5F9F;
+    --h4-color: #1B5F9F;
+}
+
 body {
     background-color: #fafafa;
 }

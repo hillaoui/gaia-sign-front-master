@@ -169,6 +169,12 @@
             </div>
         </div>
 
+        <div class="col-12 form-group" *ngIf="form.input == 'prepare-docs'">
+            <div class="form-check-inline">
+                <app-pdf-viewer></app-pdf-viewer>
+            </div>
+        </div>
+
 
 
         <div class="col-12 form-group" *ngIf="form.input == 'checkbox'">

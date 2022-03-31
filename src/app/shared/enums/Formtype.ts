@@ -1,5 +1,6 @@
 export enum Formtype {
-    signataires = 'signataires',
-    preparation = 'preparation',
-    informations = 'informations'
+    addDoc = 'Add documents',
+    selectSignatories = 'Select Signatories',
+    prepareDocs = 'Prepare Documents',
+    review = 'Review'
 }

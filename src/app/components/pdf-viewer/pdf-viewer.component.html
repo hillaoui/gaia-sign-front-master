@@ -1,14 +1,49 @@
-<div class="content-wrapper">
-    <ejs-pdfviewer id="pdfViewer" [serviceUrl]='service' [documentPath]='pdf_base64_data[0]' [toolbarSettings]="toolbarSettings" enableDownload='true' [enableFormDesignerToolbar]='true' [enableFormFields]="true" style="height:640px;display:block"></ejs-pdfviewer>
-    <div class="fields-class">
-        <button class="example-box" *ngFor="let signer of selected_signatories">{{ signer.name }}</button>
+<div class="col">
+    <div class="row signatorie-selector">
+        <div ngbDropdown class="d-inline-block selector-dropdown">
+            <button class="btn btn-outline-primary" type="button" id="dropdownBasic1" ngbDropdownToggle>Select Signatorie</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <button ngbDropdownItem type="button" *ngFor="let signatorie of selected_signatories">{{ signatorie.name }}</button>
+            </div>
+        </div>
     </div>
-    <div class="button-div">
-        <button class="btn btn-success" (click)="loadBase64string()">
-        <i class="fa font-weight-bold" aria-hidden="true">Comfirm document preparation</i>
-    </button>
-        <button class="btn btn-success" (click)="signDocument()">
-        <i class="fa font-weight-bold" aria-hidden="true">Sign The Documents</i>
-    </button>
+    <div class="row doc-preparation">
+        <div class="col-6 col-md-4  signature-container">
+            <div class="example-box">
+                <div class="example-handle" width="300" height="300" ngDraggable bounds="myBounds" (edge)="checkEdge($event)" (started)="onStart($event)" (stopped)="onStop($event)" (movingOffset)="onMoving($event)" [preventDefaultEvent]="true" (endOffset)="onMoveEnd($event)">
+                    <img src="../../../assets/images/Document1/Document-1.jpg" id="borderimg" width="200" height="100">
+                </div>
+            </div>
+        </div>
+        <div class="col pdf-container">
+            <div class="top-margin" [hidden]="isCropImage" style="border-color: black;" *ngFor="let source of images; index as index" #myBounds>
+                <img class="pdf-image-container" [src]=source alt="">
+                <div class="doc-page-info">
+                    <span class="doc-page-info-text">Document.pdf</span>
+                    <span class="doc-page-info-text">{{index}} of 6</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 pdf-documents-container ">
+            <ngb-accordion #acc="ngbAccordion">
+                <ngb-panel id="toggle-1 " title="Document.pdf ">
+                    <ng-template ngbPanelContent>
+                        <div class="pdf-doc-images-container ">
+                            <span class="pages-number ">Pages: 6</span>
+                            <div class="images-card-container " *ngFor="let source of images;index as index ">
+                                <div class="image-card-container ">
+                                    <button type="button" class="image-btn-card " (click)="showPage(index) ">
+                                    <img [src]=source alt=" " class="image-btn ">
+                                </button>
+                                    <div class="image-info ">
+                                        <div class="page-number ">{{ index+1 }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </ngb-panel>
+            </ngb-accordion>
+        </div>
     </div>
 </div>

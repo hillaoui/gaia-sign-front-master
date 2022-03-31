@@ -16,21 +16,9 @@ import { PdfViewerComponent } from "./components/pdf-viewer/pdf-viewer.component
 import { DndModule } from "ngx-drag-drop";
 import { SignataireComponent } from "./components/signataire/signataire.component";
 import { AppRoutingModule } from "./app-routing.module";
-import {
-  LinkAnnotationService,
-  BookmarkViewService,
-  MagnificationService,
-  ThumbnailViewService,
-  ToolbarService,
-  NavigationService,
-  TextSearchService,
-  TextSelectionService,
-  PrintService,
-  AnnotationService,
-  FormDesignerService,
-  FormFieldsService,
-  PdfViewerModule,
-} from "@syncfusion/ej2-angular-pdfviewer";
+import { AngularDraggableModule } from 'angular2-draggable';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
   declarations: [
@@ -44,20 +32,7 @@ import {
     PdfViewerComponent,
     SignataireComponent,
   ],
-  providers: [
-    LinkAnnotationService,
-    BookmarkViewService,
-    MagnificationService,
-    ThumbnailViewService,
-    ToolbarService,
-    NavigationService,
-    TextSearchService,
-    TextSelectionService,
-    PrintService,
-    AnnotationService,
-    FormDesignerService,
-    FormFieldsService,
-  ],
+  providers: [],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -68,7 +43,8 @@ import {
     Ng2SearchPipeModule,
     DndModule,
     AppRoutingModule,
-    PdfViewerModule,
+    AngularDraggableModule,
+    NgbModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],

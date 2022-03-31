@@ -20,7 +20,7 @@ export class MultistepformComponent implements OnInit {
   ngOnInit() {
     this.data = [
       {
-        stepname: "preparation",
+        stepname: "Add documents",
         formFields: [
           {
             key: "Document upload",
@@ -30,7 +30,25 @@ export class MultistepformComponent implements OnInit {
         ],
       },
       {
-        stepname: "informations",
+        stepname: "Select Signatories",
+        formFields: [
+          {
+            key: "signataires-list",
+            input: "drag-and-drop",
+          },
+        ],
+      },
+      {
+        stepname: "Prepare Documents",
+        formFields: [
+          {
+            key: "prepare-documents",
+            input: "prepare-docs",
+          }
+        ]
+      },
+      {
+        stepname: "Review",
         formFields: [
           {
             key: "Document title",
@@ -107,15 +125,6 @@ export class MultistepformComponent implements OnInit {
           },
         ],
       },
-      {
-        stepname: "signataires",
-        formFields: [
-          {
-            key: "signataires-list",
-            input: "drag-and-drop",
-          },
-        ],
-      },
     ];
 
     this.stepItems = this.data.map((ele) => ele.stepname);
@@ -154,5 +163,9 @@ export class MultistepformComponent implements OnInit {
 
   submitTotalFormData() {
     console.log("All Form Value => ", this.allFormsData);
+  }
+
+  goToStep(step: number) {
+      this.startingIndex = step;
   }
 }
