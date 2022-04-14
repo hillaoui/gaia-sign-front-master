@@ -13,11 +13,14 @@ import { DragAndDropListComponent } from "./components/drag-and-drop-list/drag-a
 import { HeaderComponent } from "./components/header/header.component";
 import { Ng2SearchPipeModule } from "./shared/_pipes/filter.module";
 import { PdfViewerComponent } from "./components/pdf-viewer/pdf-viewer.component";
-import { DndModule } from "ngx-drag-drop";
 import { SignataireComponent } from "./components/signataire/signataire.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { AngularDraggableModule } from 'angular2-draggable';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgxSmoothDnDModule } from 'ngx-smooth-dnd';
+import { DragulaModule } from 'ng2-dragula';
+import { DraggableDirective } from './shared/_directives/draggable.directive';
+import { DroppableDirective } from './shared/_directives/droppable.directive';
 
 
 @NgModule({
@@ -31,6 +34,8 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     HeaderComponent,
     PdfViewerComponent,
     SignataireComponent,
+    DraggableDirective,
+    DroppableDirective
   ],
   providers: [],
   imports: [
@@ -41,10 +46,11 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     ReactiveFormsModule,
     DragDropModule,
     Ng2SearchPipeModule,
-    DndModule,
     AppRoutingModule,
     AngularDraggableModule,
-    NgbModule
+    NgbModule,
+    NgxSmoothDnDModule,
+    DragulaModule.forRoot()
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],

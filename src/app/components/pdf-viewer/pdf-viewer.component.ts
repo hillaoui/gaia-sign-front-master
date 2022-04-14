@@ -1,6 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { DataService } from "src/app/shared/_services/data.service";
 import { Router } from "@angular/router";
+import { NgbPanelChangeEvent } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: "app-pdf-viewer",
@@ -9,35 +10,42 @@ import { Router } from "@angular/router";
 })
 export class PdfViewerComponent implements OnInit {
 
+
   pdf_base64_data: any;
   selected_signatories: any;
   edited_pdf_blob = [];
-  public imgSign = '';
-  public isCropImage = false;
   images = [
     '../assets/images/Document1/Document-1.jpg',
     '../assets/images/Document1/Document-2.jpg',
     '../assets/images/Document1/Document-3.jpg',
     '../assets/images/Document1/Document-4.jpg',
     '../assets/images/Document1/Document-5.jpg',
-    '../assets/images/Document1/Document-6.jpg',
+    '../assets/images/Document1/Document-6.jpg'
   ];
-
+  image = this.images[0];
   edge = {
-    top: true,
-    bottom: true,
-    left: true,
-    right: true
+    top: false,
+    bottom: false,
+    left: false,
+    right: false
   };
   movingOffset = { x: 0, y: 0 };
   endOffset = { x: 0, y: 0 };
+  inBounds = true;
+  public totalPages = this.images.length;
+  public currentpage = 0;
+  stopped_output: any;
+  positions = [];
+  @ViewChild("block") block: any;
+  @ViewChild("block1") block1: any;
+  @ViewChild("block2") block2: any;
+  @ViewChild("block3") block3: any;
 
-  fields = [{
-    id: 1,
-    name: 'signatureField',
-  }];
 
-  constructor(private dataService: DataService, private router: Router) {}
+
+
+  constructor(private dataService: DataService, private router: Router) { }
+
 
   ngOnInit(): void {
     this.dataService.shared_pdf_base64_details.subscribe((data) => {
@@ -48,59 +56,55 @@ export class PdfViewerComponent implements OnInit {
       this.selected_signatories = data;
     });
     console.log("lets see", this.selected_signatories);
+
   }
 
 
-
-  loadBase64string() {
-    let viewer = (<any>document.getElementById("pdfViewer")).ej2_instances[0];
-    let edited_pdf_blob = [];
-    let pdf_base64_data = this.pdf_base64_data;
-
-    viewer.saveAsBlob().then(function (value: any) {
-      let data = value;
-      let base64data;
-      let reader = new FileReader();
-
-      reader.onload = () => {
-        base64data = reader.result;
-        edited_pdf_blob.push(base64data);
-        viewer.load(pdf_base64_data[0], null);
-      };
-      reader.readAsDataURL(data);
-    });
-    this.edited_pdf_blob = edited_pdf_blob;
-  }
 
   checkEdge(event: any) {
     this.edge = event;
-    console.log('edge:', event);
-  }
-  onStart(event: any) {
-    console.log('started output:', event);
   }
 
   onStop(event: any) {
     console.log('stopped output:', event);
+    this.stopped_output = event;
   }
 
   onMoving(event: any) {
     this.movingOffset.x = event.x;
     this.movingOffset.y = event.y;
-    console.log('x= ' + event.x);
-    console.log('y= ' + event.y);
   }
 
   onMoveEnd(event: any) {
     this.endOffset.x = event.x;
     this.endOffset.y = event.y;
+    console.log("x= " + event.x);
+    console.log("y= " + event.y);
+    this.positions.push({
+      pageNumber: this.currentpage,
+      x: event.x,
+      y: event.y,
+      stopped_output: event
+    });
   }
 
   showPage(index: number) {
-    let images_collection = (<any>document.getElementsByClassName("pdf-image-container"));
-    images_collection[index].scrollIntoView({
-      behavior: "auto",
-      block: "start",
-      inline: "nearest"});
+    this.image = this.images[index];
+  }
+
+  confirmPosition() {
+    console.log("positions: ", this.positions);
+    this.dataService.getPositions(this.positions);
+  }
+
+  beforeChange($event: NgbPanelChangeEvent) {
+    $event.preventDefault();
+  }
+
+  resetposition() {
+    this.block.resetPosition();
+    this.block1.resetPosition();
+    this.block2.resetPosition();
+    this.block3.resetPosition();
   }
 }

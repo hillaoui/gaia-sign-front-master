@@ -28,6 +28,9 @@ export class DataService {
   private blob_pdf_data = new BehaviorSubject([]);
   shared_blob_pdf_details = this.blob_pdf_data.asObservable();
 
+  private postitions = new BehaviorSubject([]);
+  shared_positions = this.postitions.asObservable();
+
   getFormData(data: any) {
     this.form_details.next(data);
   }
@@ -46,5 +49,9 @@ export class DataService {
 
   getBlobPdfData(data: any) {
     this.blob_pdf_data.next(data);
+  }
+
+  getPositions(data: any) {
+    this.postitions.next(data);
   }
 }

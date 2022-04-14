@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, ElementRef, OnInit } from "@angular/core";
 import { DataService } from "src/app/shared/_services/data.service";
 
 @Component({
@@ -7,21 +7,55 @@ import { DataService } from "src/app/shared/_services/data.service";
   styleUrls: ["./signataire.component.scss"],
 })
 export class SignataireComponent implements OnInit {
-  public service = "http://localhost:4628/api/pdfviewer";
 
-  edited_pdf_base64_data: any;
+  positions: any;
+  images = [
+    '../assets/images/Document1/Document-1.jpg',
+    '../assets/images/Document1/Document-2.jpg',
+    '../assets/images/Document1/Document-3.jpg',
+    '../assets/images/Document1/Document-4.jpg',
+    '../assets/images/Document1/Document-5.jpg',
+    '../assets/images/Document1/Document-6.jpg',
+  ];
+  public totalPages = this.images.length - 1;
+  public currentpage = 0;
+  edge = {
+    top: true,
+    bottom: true,
+    left: true,
+    right: true
+  };
+  movingOffset = { x: 0, y: 0 };
+  endOffset = { x: 0, y: 0 };
+  inBounds = true;
 
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
-    this.dataService.shared_blob_pdf_details.subscribe((data) => {
-      this.edited_pdf_base64_data = data;
+    this.currentpage = 1;
+    this.dataService.shared_positions.subscribe((data) => {
+      this.positions = data;
     });
-    console.log("edited_pdf_base64_data", this.edited_pdf_base64_data);
+    console.log("Positions: ", this.positions);
   }
 
-  public download_pdf() {
-    let viewer = (<any>document.getElementById("pdfViewer")).ej2_instances[0];
-    viewer.download();
+  // show the previous page
+  public previous() {
+    if (this.currentpage > 0) {
+      if (this.currentpage === 1) {
+        this.currentpage = this.totalPages;
+      } else {
+        this.currentpage--;
+      }
+    }
+  }
+
+  // show the next page
+  public next() {
+    if (this.totalPages > this.currentpage) {
+      this.currentpage++;
+    } else {
+      this.currentpage = 1;
+    }
   }
 }

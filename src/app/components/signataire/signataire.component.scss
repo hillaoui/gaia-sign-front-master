@@ -1,10 +1,725 @@
+.fileUploadDiv {
+    width: 80%;
+    margin: auto;
+    padding: 10px;
+    margin-top: 0rem;
+}
+
 .button-div {
     margin-top: 1rem;
     display: flex;
     width: 100%;
-    justify-content: space-evenly;
-    align-content: center;
+}
+
+.pagescount {
+    margin: 0.5rem;
+}
+
+.page-div {
+    margin-right: 1rem;
+    display: flex;
+}
+
+.button-margin {
+    margin-right: 1rem;
+}
+
+.img-container {
+    width: 100%;
+    float: left;
+    margin-top: 1.5rem;
+}
+
+ :host ::ng-deep .pdfViewer .page .canvasWrapper {
+    margin-top: 10px;
+    border: 1px solid #ccc;
+}
+
+#borderimg {
+    border: 3px solid #555;
+}
+
+.mat-stepper-horizontal {
+    margin-top: 8px;
+}
+
+.mat-form-field {
+    margin-top: 16px;
+}
+
+md-stepper .horizontal md-step .step-header {
+    display: none;
+}
+
+.step-header {
+    position: relative;
+    padding: 10px;
+}
+
+.step-header .label {
+    margin: 0 8px;
+}
+
+.step-content {
+    padding: 10px;
+}
+
+md-stepper .vertical md-step .step-content {
+    margin: 0 0 0 20px;
+    border-left: 1px solid #e0e0e0;
+}
+
+.step-header .line {
+    margin-right: 8px;
+    width: 100%;
+    height: 1px;
+    background-color: #e0e0e0;
+}
+
+.step-circle {
+    background-color: #9b9b9b;
+}
+
+.step-circle.done {
+    background-color: #3f51b5;
+}
+
+.step-circle {
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+}
+
+.file-uploader-container {
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    width: 660px;
+    padding: 6rem;
+    text-align: center;
+    border: dashed 1px #979797;
+    position: relative;
+    margin: 0 auto;
+    top: 50px;
+    input {
+        opacity: 0;
+        position: absolute;
+        z-index: 2;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+    }
+    label {
+        color: white;
+        font-size: large;
+        width: 183px;
+        height: 44px;
+        border-radius: 21.5px;
+        background-color: #db202f;
+        padding: 8px 16px;
+    }
+    h3 {
+        font-size: 20px;
+        font-weight: 600;
+        color: #38424c;
+    }
+}
+
+.fileover {
+    animation: shake 1s;
+    animation-iteration-count: infinite;
+}
+
+.files-list {
+    margin-top: 5.5rem;
+    .single-file {
+        display: flex;
+        padding: 0.5rem;
+        justify-content: space-between;
+        align-items: center;
+        border: dashed 1px #979797;
+        margin-bottom: 1rem;
+        img.delete {
+            margin-left: 0.5rem;
+            cursor: pointer;
+            align-self: flex-end;
+        }
+        display: flex;
+        flex-grow: 1;
+        .name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #353f4a;
+            margin: 0;
+        }
+        .size {
+            font-size: 12px;
+            font-weight: 500;
+            color: #a4a4a4;
+            margin: 0;
+            margin-bottom: 0.25rem;
+        }
+        .info {
+            width: 100%
+        }
+    }
+}
+
+.upload {
+    position: absolute;
+    right: 24px;
+}
+
+.pdf-container {
+    flex-grow: 1;
+    position: relative;
+    height: auto;
+    background-color: #e9e9e9;
+}
+
+.pdf-image-container {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+
+.wrapper {
+    margin: 25px auto;
+    max-width: 600px;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.container-signatories {
+    width: 45%;
+    margin: 0 25px 25px 0;
+    display: flex;
+    flex-direction: column;
     flex-wrap: nowrap;
+    align-content: center;
+    justify-content: flex-start;
+    vertical-align: top;
+    color: #008ABF;
+}
+
+.signer-list {
+    width: 100%;
+    border: solid 1px #ccc;
+    min-height: 60px;
+    display: inline-block;
+    background: white;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 25px;
+    height: 400px;
+    overflow-y: scroll;
+}
+
+.signer-block {
+    padding: 10px;
+    border-bottom: solid 1px #ccc;
+    color: rgba(0, 0, 0, 0.87);
+    display: flex;
     flex-direction: row;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    cursor: move;
+    background: white;
+    font-size: 14px;
+    align-content: center;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    margin: auto;
+}
+
+.cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+    opacity: 0;
+}
+
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.signer-block:last-child {
+    border: none;
+}
+
+.signer-list.cdk-drop-list-dragging .signer-block:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.signatories-class {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.signers-class {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-container {
+    width: 490px;
+    display: block;
+    margin: 0 auto;
+}
+
+input#search_bar {
+    margin: 0 auto;
+    width: 100%;
+    height: 40px;
+    padding: 0 20px;
+    font-size: 1rem;
+    border: 1px solid #D0CFCE;
+    outline: none;
+    border-radius: 20px;
+    &:focus {
+        border: 1px solid #008ABF;
+        transition: 0.35s ease;
+        color: #008ABF;
+        &::-webkit-input-placeholder {
+            transition: opacity 0.45s ease;
+            opacity: 0;
+        }
+        &::-moz-placeholder {
+            transition: opacity 0.45s ease;
+            opacity: 0;
+        }
+        &:-ms-placeholder {
+            transition: opacity 0.45s ease;
+            opacity: 0;
+        }
+    }
+}
+
+ul {
+    list-style-type: disc;
+    padding: 0;
+}
+
+li {
+    background-color: #fff;
+    display: flex;
+}
+
+.ordonner-signers {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: baseline;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    border: solid 1px #D0CFCE;
+    border-radius: 20px;
+}
+
+.radio-group {
+    display: contents;
+    margin: 0;
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 0;
+}
+
+input[type=radio] {
+    position: absolute;
+    visibility: hidden;
+    display: none;
+}
+
+input[type=radio]:checked+label {
+    color: #ffffff;
+    background: #9D2267;
+    border-radius: 30px;
+    border-bottom: none;
+    padding: 2px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 5px px;
+    margin: 2px;
+    margin-bottom: 2px;
+    /* font-size: 0.9em; */
+    font-weight: 700;
+}
+
+.border-drag {
+    border: 1px solid #dddddd;
+    height: 100%;
+    padding: 0;
+    background: #f6f7fa;
+}
+
+.all-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: space-between;
+    padding-left: 26px;
+}
+
+.signator-avatar {
+    display: inline-block;
+    font-size: 19Px;
+    border-radius: 30px;
+    padding: 5px 5px 14px 8px;
+    height: 40px;
+    width: 40px;
+    margin-right: 10px;
+    color: #1E0513;
+    margin-top: 13px;
+    background: #E8DFE4;
+}
+
+h2 {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    margin-top: revert;
+}
+
+.doc-preparation {
+    display: flex;
+}
+
+.signature-container {
+    display: flex;
+    flex-direction: column;
+    background: rgb(249, 249, 249);
+    border: 1px solid rgb(217, 217, 217);
+    padding: 0px;
+    width: 25vh;
+}
+
+.container {
+    max-width: -webkit-fill-available;
+}
+
+.pdf-documents-container {
+    background: #f9f9f9;
+    width: 25vh;
+    height: auto;
+    border: 1px solid #d9d9d9;
+    padding-right: 0px;
+    padding-left: 0px;
+    position: relative;
+    overflow: scroll;
+}
+
+.doc-name-btn {
+    text-transform: none;
+    font-weight: normal;
+    background: 0px 0px;
+    border: 0px;
+    cursor: pointer;
+    display: block;
+    font-family: "Helvetica Neue";
+    font-size: inherit;
+    line-height: 20px;
+    letter-spacing: normal;
+    padding: 6px 48px 6px 24px;
+    position: relative;
+    text-align: left;
+    user-select: none;
+    width: 100%;
+}
+
+.doc-name {
+    display: block;
+    overflow: auto;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: "Helvetica Neue";
+}
+
+.pages-number {
+    color: rgb(102, 102, 102);
+    font-size: 13px;
+    font-weight: 400;
+    left: 0px;
+    letter-spacing: normal;
+    line-height: 18px;
+    padding: 0px 24px;
+    text-align: left;
+    text-decoration: none;
+    text-transform: none;
+    width: 100%;
+    font-stretch: 100%;
+    font-style: normal;
+    margin-top: -2px;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.pdf-doc-images-container {
+    height: auto;
+    visibility: visible;
+    overflow: hidden;
+}
+
+.images-card-container {
+    border: 1px solid rgb(204, 204, 204);
+    cursor: pointer;
+    display: block;
+    margin: 0px auto 14px;
+    position: relative;
+    width: 132px;
+}
+
+.image-card-container {
+    background-color: rgb(255, 255, 255);
+    position: relative;
+    width: 132px;
+}
+
+.image-btn-card {
+    border: 1px solid rgb(217, 217, 217);
+    display: block;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    cursor: pointer;
+    background-color: rgb(255, 255, 255);
+}
+
+.image-btn {
+    display: block;
+    border: 0px;
+    max-width: 100%;
+    min-height: 170.824px;
+}
+
+.image-info {
+    -webkit-box-align: center;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(233, 233, 233);
+    bottom: 1px;
+    display: flex;
+    left: 1px;
+    min-height: 28px;
+    padding: 3px 4px;
+    position: absolute;
+    right: 1px;
+}
+
+.page-number {
+    color: rgb(102, 102, 102);
+    flex-shrink: 0;
+    font-size: 12px;
+}
+
+.doc-page-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.doc-page-info-text {
+    font-size: 15px;
+}
+
+.signatorie-selector {
+    border-bottom: 1px solid rgb(204, 204, 204);
+    display: flex;
+    flex-direction: row;
+    min-height: 41px;
+    width: -webkit-fill-available;
+    -webkit-box-align: center;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    position: relative;
+    background-color: rgb(233, 233, 233);
+}
+
+.selector-dropdown {
+    max-width: 375px;
+    min-width: 220px;
+    padding-left: 12px;
+    width: 240px;
+    display: inline-block;
+}
+
+.field-btn {
+    margin: 8px 0px;
+    padding: 0px;
+    -webkit-box-align: center;
+    align-items: center;
+    background: transparent;
+    border: none;
+    border-radius: 0px;
+    color: inherit;
+    cursor: pointer;
+    display: flex;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    letter-spacing: normal;
+    line-height: 18px;
+    overflow: hidden;
+}
+
+img {
+    user-select: none;
+}
+
+.first-fields {
+    border-bottom: 1px solid rgb(217, 217, 217);
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+
+.second-fields {
+    border-bottom: 1px solid rgb(217, 217, 217);
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+}
+
+.fields-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.field-btn {
+    align-items: center;
+    background: transparent;
+    border: none;
+    border-radius: 0px;
+    color: inherit;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    margin: 0px;
+    overflow: hidden;
+    padding: 5px 0px 5px 15px;
+    width: 100%;
+}
+
+.field-text {
+    padding: 0px;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+
+.field-btn:hover {
+    background: darkgray;
+}
+
+.dragged-item {
+    position: relative;
+    left: 0px;
+    top: 0px;
+    z-index: 1000;
+    background-color: var(--header-menu-bg-color);
+    padding: 5px;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+}
+
+.pagescount {
+    text-align: center;
+}
+
+.page-div {
+    display: flex;
+}
+
+.move-btn {
+    width: auto;
+}
+
+.multistep-header {
+    text-align: center;
+}
+
+.form-heading {
+    list-style: none;
+    margin: 0 0 15px 0;
+    padding: 0;
+    display: inline-block;
+}
+
+.form-heading li {
+    display: inline-block;
+    padding: 10px;
+    min-width: 160px;
+    position: relative;
+}
+
+.stepno {
+    background: #B8AEB4;
+    color: #ffffff;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    display: inline-block;
+    border-radius: 50%;
+    z-index: 1;
+    position: relative;
+}
+
+.steptitle {
+    display: block;
+    z-index: 1;
+    position: relative;
+    text-transform: capitalize;
+}
+
+.form-heading li.active .stepno,
+.form-heading li.active::after {
+    background: #9d2278;
+}
+
+.form-heading li.completed .stepno,
+.form-heading li.completed::after {
+    background: #B8AEB4;
+}
+
+
+/* multistep container */
+
+.multistepbox {
+    position: relative;
+    display: inline-block;
+}
+
+.multistepbox span {
+    margin-right: 5px;
+}
+
+.multistepbox button {
+    padding: 0;
+    background-color: transparent;
+    box-shadow: none;
+    border: 0;
+}
+
+.button-cont {
+    margin-bottom: 15px;
 }

@@ -1,26 +1,49 @@
-<div class="col">
+<div class="col disable-select" #myBounds [ngClass]="{ 'top-b': !edge?.top, 'bottom-b': !edge?.bottom, 'left-b': !edge?.left, 'right-b': !edge?.right }">
     <div class="row signatorie-selector">
-        <div ngbDropdown class="d-inline-block selector-dropdown">
-            <button class="btn btn-outline-primary" type="button" id="dropdownBasic1" ngbDropdownToggle>Select Signatorie</button>
-            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                <button ngbDropdownItem type="button" *ngFor="let signatorie of selected_signatories">{{ signatorie.name }}</button>
-            </div>
-        </div>
     </div>
     <div class="row doc-preparation">
         <div class="col-6 col-md-4  signature-container">
-            <div class="example-box">
-                <div class="example-handle" width="300" height="300" ngDraggable bounds="myBounds" (edge)="checkEdge($event)" (started)="onStart($event)" (stopped)="onStop($event)" (movingOffset)="onMoving($event)" [preventDefaultEvent]="true" (endOffset)="onMoveEnd($event)">
-                    <img src="../../../assets/images/Document1/Document-1.jpg" id="borderimg" width="200" height="100">
+            <div class="first-fields">
+                <div class="fields-container">
+                    <ngb-accordion #acc="ngbAccordion" activeIds="[toggle-1,toggle-1,toggle-2,toggle-3,toggle-4,toggle-4]" (panelChange)="beforeChange($event)" type="light">
+                        <ngb-panel id="toggle-1" title="Signature">
+                            <ng-template ngbPanelContent>
+                                <div class="images-card-container " *ngFor="let signatorie of selected_signatories;index as index ">
+                                    <div class="dragged-item" ngDraggable [bounds]="myBounds" [inBounds]="true" (edge)="checkEdge($event)" (stopped)="onStop($event)" (movingOffset)="onMoving($event)" (endOffset)="onMoveEnd($event)" #block="ngDraggable">{{ signatorie.name}}</div>
+                                </div>
+                            </ng-template>
+                        </ngb-panel>
+                        <ngb-panel id="toggle-2" title="Initial">
+                            <ng-template ngbPanelContent>
+                                <div class="images-card-container" *ngFor="let signatorie of selected_signatories;index as index ">
+                                    <div class="dragged-item1" ngDraggable [bounds]="myBounds" [inBounds]="true" (edge)="checkEdge($event)" (stopped)="onStop($event)" (movingOffset)="onMoving($event)" (endOffset)="onMoveEnd($event)" #block1="ngDraggable">{{ signatorie.name}}</div>
+                                </div>
+                            </ng-template>
+                        </ngb-panel>
+                        <ngb-panel id="toggle-3" title="Stamp">
+                            <ng-template ngbPanelContent>
+                                <div class="images-card-container" *ngFor="let signatorie of selected_signatories;index as index ">
+                                    <div class="dragged-item2" ngDraggable [bounds]="myBounds" [inBounds]="true" (edge)="checkEdge($event)" (stopped)="onStop($event)" (movingOffset)="onMoving($event)" (endOffset)="onMoveEnd($event)" #block2="ngDraggable">{{ signatorie.name}}</div>
+                                </div>
+                            </ng-template>
+                        </ngb-panel>
+                        <ngb-panel id="toggle-4" title="Date Signed">
+                            <ng-template ngbPanelContent>
+                                <div class="images-card-container" *ngFor="let signatorie of selected_signatories;index as index ">
+                                    <div class="dragged-item3" ngDraggable [bounds]="myBounds" [inBounds]="true" (edge)="checkEdge($event)" (stopped)="onStop($event)" (movingOffset)="onMoving($event)" (endOffset)="onMoveEnd($event)" #block3="ngDraggable">{{ signatorie.name}}</div>
+                                </div>
+                            </ng-template>
+                        </ngb-panel>
+                    </ngb-accordion>
                 </div>
             </div>
         </div>
         <div class="col pdf-container">
-            <div class="top-margin" [hidden]="isCropImage" style="border-color: black;" *ngFor="let source of images; index as index" #myBounds>
-                <img class="pdf-image-container" [src]=source alt="">
+            <div class="top-margin" style="border-color: black; ">
+                <img class="pdf-image-container " [src]=image alt=" ">
                 <div class="doc-page-info">
-                    <span class="doc-page-info-text">Document.pdf</span>
-                    <span class="doc-page-info-text">{{index}} of 6</span>
+                    <span class="doc-page-info-text " id="droppable">Document.pdf</span>
+                    <span class="doc-page-info-text ">{{images.indexOf(image)+1}} of {{totalPages}}</span>
                 </div>
             </div>
         </div>
@@ -30,10 +53,10 @@
                     <ng-template ngbPanelContent>
                         <div class="pdf-doc-images-container ">
                             <span class="pages-number ">Pages: 6</span>
-                            <div class="images-card-container " *ngFor="let source of images;index as index ">
+                            <div class="images-card-container" *ngFor="let source of images;index as index">
                                 <div class="image-card-container ">
-                                    <button type="button" class="image-btn-card " (click)="showPage(index) ">
-                                    <img [src]=source alt=" " class="image-btn ">
+                                    <button type="button" class="image-btn-card " (click)="showPage(index);resetposition()">
+                                    <img [src]=source alt=" " class="image-btn">
                                 </button>
                                     <div class="image-info ">
                                         <div class="page-number ">{{ index+1 }}</div>
@@ -46,4 +69,9 @@
             </ngb-accordion>
         </div>
     </div>
+</div>
+<div>
+    <button class="btn" type="button" (click)="confirmPosition()">
+            <i class="fa fa-check-circle" aria-hidden="true"></i>
+            </button>
 </div>

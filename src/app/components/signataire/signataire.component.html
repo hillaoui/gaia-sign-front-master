@@ -1,8 +1,52 @@
-<div class="content-wrapper">
-    <ejs-pdfviewer id="pdfViewer" [serviceUrl]='service' [documentPath]='edited_pdf_base64_data[0]' [enableFormDesignerToolbar]='false' [enableFormFields]="true" style="height:640px;display:block"></ejs-pdfviewer>
-</div>
-<div class="button-div">
-    <button class="btn btn-success" (click)="download_pdf()">
-        <i class="fa font-weight-bold" aria-hidden="true">Submit</i>
-    </button>
+<div class="multistep">
+    <div class="multistep-header">
+        <ul class="form-heading">
+            <li>
+                <span>
+                    <span class="stepno"></span>
+                <span class="steptitle">Signature</span>
+                </span>
+            </li>
+        </ul>
+    </div>
+    <div class="multistep-content">
+        <div class="col">
+            <div class="row signatorie-selector">
+                <button type="button" (click)="previous()" class="btn btn-success move-btn">
+                  <i class="fa fa-angle-left font-weight-bold" aria-hidden="true"></i>
+                </button>
+                <p class="pagescount">Pages - {{currentpage}} of {{totalPages}}</p>
+                <button type="button" (click)="next()" class="btn btn-success move-btn">
+                  <i class="fa fa-angle-right font-weight-bold" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="row doc-preparation" #myBounds>
+                <div class="col-6 col-md-4  signature-container">
+                    <div class="images-card-container " *ngFor="let element of this.positions">
+                        <div class="dragged-item" ngDraggable="false" [bounds]="myBounds" #block="ngDraggable" [position]=element?.stopped_output>Name</div>
+                    </div>
+                </div>
+                <div class="col pdf-container">
+                    <div class="top-margin " style="border-color: black; ">
+                        <img class="pdf-image-container " [src]=images[currentpage] alt=" ">
+                        <div class="doc-page-info ">
+                            <span class="doc-page-info-text ">Document.pdf</span>
+                            <span class="doc-page-info-text ">{{currentpage}} of {{totalPages}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 pdf-documents-container ">
+                </div>
+            </div>
+        </div>
+        <div>
+            <div>
+                <i></i>
+            </div>
+        </div>
+        <div class="col-6 button-cont text-right">
+            <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+    </div>
+
 </div>
